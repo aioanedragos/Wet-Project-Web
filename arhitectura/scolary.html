@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>W.E.T.</title>
+<!--###########################################################################
+#    css is an open source file posted on github by necolas                   #
+#            updated verison: github.com/necolas/normalize.css                #
+###############################################################################-->
+    <link href="ScholarCss.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<article>
+    <header>
+        <h1 style="text-align: center;">Report<br>W.E.T.(web of things platform)</h1>
+    </header>
+    <div role="contentinfo">
+        <ol role="directory">
+            <li><a href="#abstract">Abstract</a></li>
+            <li><a href="#description">Description</a></li>
+            <li><a href="#modules">Modules</a></li>
+            <ol role="directory">
+                <li><a href="#user-mng">User management</a>
+                    <ol role="directory">
+                        <li><a href="#login-register">Login/Register</a></li>
+                        <li><a href="#add-friend">Add/Remove friend</a></li>
+                        <li><a href="#give-acc">Give/Remove access to a specific device</a></li>
+                    </ol>
+                </li>
+                <li><a href="#dev-mng">Device management</a></li>
+                <ol>
+                    <li><a href="#add-dev">Add/Remove device</a></li>
+                    <li><a href="#conn-dev">Connect to device</a></li>
+                    <li><a href="#control-device">Control device</a></li>
+                </ol>
+            </ol>
+            <li><a href="#data-model">Data models</a></li>
+            <li><a href="#data-model-schema">Data model schema</a></li>
+        </ol>
+        <dt>Authors</dt>
+        <dd>
+            <ul>
+                <li>Pirlog Marcel Ionut</li>
+                <li>Aioane Dragos Costin</li>
+                <li>Daniel Creanga</li>
+            </ul>
+        </dd>
+    </div>
+    <section id="abstract" typeof="sa:Abstract" role="doc-abstract">
+        <h2>1. Abstract</h2>
+        <p>W.E.T. is a multi-device Web system able to identify and control various types of IoT sensors and devices.
+            Also the system permit devices management and share access with other peoples (friends, family, etc)</p>
+    </section>
+    <section id="description" role="doc-introduction">
+        <h2>2. Description</h2>
+        <p>
+            The project allows the ur to create a list with all IoT devices from home ("smart" bulbs, lockers, air
+            conditioners) and control them using a web application. WET use bluetooth feature from the user device and
+            scan for available IoT devices. After the user create a list with all devices from the home can grant access
+            right for other people (family, friends, collaborators). That rights can expire after a while or can be
+            removed by the user.
+        </p>
+    </section>
+    <section id="modules">
+        <h2>3. Modules</h2>
+        <section id="user-mng">
+            <h3>3.1 User management</h3>
+            <section id="login-register">
+                <h4>3.1.1 Login/Register</h4>
+                <p>User registration are made using an email address (as username) and the same address used for login.
+                    This module authorize the user who use the application and let the application to know something
+                    about him.</p>
+            </section>
+
+            <section id="add-friend">
+                <h4>3.1.2 Add/Remove friend</h4>
+                <p>This component help the user to create a friend list to whom it may give rights in the future. Make
+                    an easy way to make friend management.</p>
+            </section>
+
+            <section id="give-acc">
+                <h4>3.1.3 Give/Remove access to a specific device</h4>
+                <p>This component allows the user to give temporary access at his personally IoT device from the house.
+                    After a while or when the user want have possibility to remove his right. When the user give the
+                    access to his friend this can connect to the device and control them.</p>
+            </section>
+            <h3>3.2 Device management</h3>
+            <section id="dev-mng">
+                <section id="add-dev">
+                    <h4>3.2.1 Add/Remove device</h4>
+                    <p>This component are splitted into two functionalities: </p>
+                    <ul>
+                        <li>Firstly, when the user open the application and scan for device using bluetooth and add
+                            device to his list or directly connect to him.
+                        </li>
+                        <li>Secondly, when the user decide to remove a device from his list, when the the right for dis
+                            device has expired or are taken the device are removed automatically from the user list.
+                        </li>
+                    </ul>
+                </section>
+                <section id="conn-dev">
+                    <h4>3.2.2 Connect to device</h4>
+                    <p>Connect directly to the device (for which the user have rights) and allow the control of the
+                        device.</p>
+                </section>
+                <section id="control-device">
+                    <h4>3.2.3 Control device</h4>
+                    <p>This component work directly with the device and allow the user to use the IoT device to which it
+                        is connected from the application. If the device is a sensor can receive data from them and are
+                        displayed.</p>
+                </section>
+            </section>
+        </section>
+    </section>
+    <section id="data-model">
+        <h2>4. Data models</h2>
+        <p>
+            In our application we have the following data models: User, CloseFriend, Device, Property, Action, Event
+        </p>
+        <ul>
+            <li><b>User:</b> store every user from the application and have following columns.
+                <br>
+                <ul>
+                    <li><i>email: string (PK)</i></li>
+                    <li>firstName: string</li>
+                    <li>lastName: string</li>
+                    <li>telephone: string</li>
+                    <li>password: string (SHA256)</li>
+                    <li>address: string</li>
+                </ul>
+            </li>
+            <li><b>CloseFriend:</b> store all access right from device owner for temporary time
+                <br>
+                <ul>
+                    <li>id: uuid (PK)</li>
+                    <li><i>user_email: string (FK user_id)</i></li>
+                    <li>expire_date: dateTime</li>
+                </ul>
+            </li>
+            <li><b>Device:</b> store every device registered in our application
+                <br>
+                <ul>
+                    <li><i>id: uuid (PK)</i></li>
+                    <li>title: string</li>
+                    <li>description: string</li>
+                    <li><i>user_email: string (FK user_id)</i></li>
+                </ul>
+            </li>
+            <li><b>Property:</b> store property of the device, for example, if is one smart bulb here are stored information about state on/off
+                <br>
+                <ul>
+                    <li>observable</li>
+                    <li>title: string</li>
+                    <li>description: string</li>
+                    <li><i>device: uuid (FK device_id)</i></li>
+                </ul>
+            </li>
+            <li><b>Action:</b> store the actions we can do on the device (turn on, play song, open door)
+                <br>
+                <ul>
+                    <li>safe: bool</li>
+                    <li>idempotent: bool</li>
+                    <li>title: string</li>
+                    <li>description: string</li>
+                    <li><i>device: uuid (FK device_id)</i></li>
+                </ul>
+            </li>
+            <li><b>Event:</b> store all events emitted by the device
+                <br>
+                <ul>
+                    <li>title: string</li>
+                    <li>description: string</li>
+                    <li>event: type</li>
+                    <li><i>device: uuid (FK device_id)</i></li>
+                </ul>
+            </li>
+        </ul>
+        <p><b>***All tables can be modified until the final implementation of the project</b></p>
+    </section>
+    <section id="data-model-schema">
+        <h2>5. Data model schema</h2>
+        <img src="./imgs/db_schema.png">
+    </section>
+</article>
+</body>
+</html>
