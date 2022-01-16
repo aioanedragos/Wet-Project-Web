@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "14p7yBUGGApIJfJ5aroQiabwHoqzX2AE/zRTaqj8sGQsnHL0iJyI7QaD7Z4uRchI/QjcqFXfGe2GA8ba7zVEkQ==",
+  "dgSpecHash": "7o+9gjVoTxk9z00sawIGJ71DlLC0Ku33ub8zYDQAklzdl5QZ+dxfJ8hLX8px4Ub5M3S5LpCuk5rWqAMcSFW08w==",
   "success": true,
-  "projectFilePath": "H:\\facultate\\Wade\\project\\backend\\wet-api.csproj",
+  "projectFilePath": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\danyb\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\danyb\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
