@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\facultate\\Wade\\project\\backend\\wet-api.csproj": {}
+    "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj": {}
   },
   "projects": {
-    "H:\\facultate\\Wade\\project\\backend\\wet-api.csproj": {
+    "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\facultate\\Wade\\project\\backend\\wet-api.csproj",
+        "projectUniqueName": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj",
         "projectName": "wet-api",
-        "projectPath": "H:\\facultate\\Wade\\project\\backend\\wet-api.csproj",
+        "projectPath": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj",
         "packagesPath": "C:\\Users\\danyb\\.nuget\\packages\\",
-        "outputPath": "H:\\facultate\\Wade\\project\\backend\\obj\\",
+        "outputPath": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\danyb\\AppData\\Roaming\\NuGet\\NuGet.Config"
