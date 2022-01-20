@@ -1,0 +1,69 @@
+@page "/device/test"
+
+<PageTitle>Device Details</PageTitle>
+
+@if (device == null) {
+  <p><em>Loading...</em></p>
+} else {
+  <h1>This is your @device.Title</h1>
+  @if (device.Description != null) {
+    <p>@device.Description</p>
+  }
+
+  @if (actions != null) {
+    @foreach(var action in actions) {
+      <div>
+        @if (action.Description != null) {
+          @action.Description
+        } 
+        @switch(action.Type) {
+          case ActionTypes.Toggle:
+            {
+              <input type="checkbox" class="ml-auto">
+              break;
+            }
+        }
+      </div>
+    }
+  }
+}
+
+@code {
+  private Device? device;
+  private Action[]? actions;
+
+  protected override void OnInitialized()
+  {
+    this.device = new Device {
+      Id = Guid.NewGuid(),
+      Title = "Light bulb",
+      Description = "an IoT light bulb"
+    };
+
+    this.actions = new Action[] {
+      new Action {
+        DeviceId = this.device.Id,
+        Description = "Turn bulb on",
+        Type = ActionTypes.Toggle
+      }
+    };
+  }
+
+  public class Device 
+  {
+    public Guid Id { get; set; }
+    public string Title { get; set; }
+    public string? Description { get; set; }  
+  }
+
+  public class Action
+  {
+    public Guid DeviceId { get; set; }
+    public string? Description { get; set; }
+    public ActionTypes Type { get; set; }
+  }
+
+  public enum ActionTypes { 
+    Toggle = 1
+  }
+}
