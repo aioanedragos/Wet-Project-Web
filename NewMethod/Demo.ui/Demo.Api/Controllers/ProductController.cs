@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Demo.Api.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        public string ConnectionStringName { get; set; } = "Data Source=DESKTOP-9I7KKRN;Initial Catalog=teste;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
         [HttpGet]
         [Route("getProducts")]
         public IActionResult getProducts()
@@ -29,6 +32,22 @@ namespace Demo.Api.Controllers
             p = new Product { Id = 4, Name = "Product 4", Brand = "Brand 4", Price = 4, Quantity = 4 };
             _productList.Add(p);
             return Ok(_productList);
+        }
+
+
+        [HttpPost]
+        [Route("insertPeople")]
+        public IActionResult insertPeople(IEnumerable<Person> person)
+        {
+            string query = "INSERT INTO Persons (firstName, lastName, email) VALUES (@lastName, @firstName, @email)";
+            SqlConnection connection = new SqlConnection(ConnectionStringName);
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@lastName", person.First().lastName);
+            command.Parameters.AddWithValue("@lastName", person.First().firstName);
+            command.Parameters.AddWithValue("@lastName", person.First().email);
+
+            command.ExecuteNonQuery();
+            return Ok(person);
         }
     }
 }
