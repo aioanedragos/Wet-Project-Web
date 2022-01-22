@@ -7,24 +7,39 @@ namespace wet_api.Controllers;
 [Route("devices")]
 public class DeviceController : ControllerBase 
 {
-  public DeviceController()
+  private readonly DataContext _dbContext;
+  public DeviceController(DataContext dataContext)
   {
-      
+      this._dbContext = dataContext;
   }
 
-  [HttpGet(Name = "GetDevicesList")]
-  public IEnumerable<Device> Get()
+  [HttpGet]
+  public async Task<ActionResult<List<Device>>> Get()
   {
-    return new List<Device>() {
-      new Device() { Id = Guid.NewGuid(), Title = "Light bulb", Description = "RGB light bulb"},
-      new Device() { Id = Guid.NewGuid(), Title = "Air conditioner"}
-    };
+    // var devices = new List<Device> {
+    //   new Device("Light bulb", "RGB light bulb"),
+    //   new Device("Air conditioner")
+    // };
+
+    var devices = _dbContext.Devices.ToList();
+
+    return Ok(devices);
   }
 
   [HttpGet]
   [Route("{deviceId}")]
-  public Device GetById(string deviceId)
+  public async Task<ActionResult<Device>> GetById(string deviceId)
   {
-    return new Device() { Id = Guid.NewGuid(), Title = "Light bulb", Description = "RGB light bulb" };
+    var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
+    if (!isValidGuid) {
+      return BadRequest("Invalid id");
+    }
+
+    var device = await _dbContext.Devices.FindAsync(parsedId);
+    if (device == null) {
+      return NotFound("Device not found");
+    }
+
+    return Ok(device);
   }
 }
