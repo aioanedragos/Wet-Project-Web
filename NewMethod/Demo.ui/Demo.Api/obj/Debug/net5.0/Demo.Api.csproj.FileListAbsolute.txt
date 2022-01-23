@@ -27,3 +27,9 @@ E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\obj\Debug\net5.0\Demo.
 E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\obj\Debug\net5.0\ref\Demo.Api.dll
 E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\obj\Debug\net5.0\Demo.Api.pdb
 E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\obj\Debug\net5.0\Demo.Api.genruntimeconfig.cache
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\bin\Debug\net5.0\System.Data.SqlClient.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.Api\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

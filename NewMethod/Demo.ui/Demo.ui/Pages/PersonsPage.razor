@@ -1,0 +1,26 @@
+﻿@page "/person"
+@using Demo.Api.Models;
+@using Demo.Api.Controllers;
+<h1>People Page</h1>
+
+<h4>Insert New Person</h4>
+<EditForm Model="@newPerson" OnValidSubmit="@InsertPerson">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="firstName" @bind-Value="newPerson.firstName" />
+    <InputText id="lastName" @bind-Value="newPerson.lastName" />
+    <InputText id="emailAddress" @bind-Value="newPerson.email" />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    private Person newPerson = new Person();
+
+    private async Task InsertPerson()
+    {
+        ProductController person = new ProductController();
+        person.insertPeople(newPerson);
+    }
+}

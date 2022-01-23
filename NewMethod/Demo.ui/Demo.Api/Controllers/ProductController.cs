@@ -37,16 +37,17 @@ namespace Demo.Api.Controllers
 
         [HttpPost]
         [Route("insertPeople")]
-        public IActionResult insertPeople(IEnumerable<Person> person)
+        public IActionResult insertPeople(Person person)
         {
             string query = "INSERT INTO Persons (firstName, lastName, email) VALUES (@lastName, @firstName, @email)";
             SqlConnection connection = new SqlConnection(ConnectionStringName);
             SqlCommand command = new SqlCommand(query, connection);
-            command.Parameters.AddWithValue("@lastName", person.First().lastName);
-            command.Parameters.AddWithValue("@lastName", person.First().firstName);
-            command.Parameters.AddWithValue("@lastName", person.First().email);
-
+            command.Parameters.AddWithValue("@lastName", person.lastName);
+            command.Parameters.AddWithValue("@firstName", person.firstName);
+            command.Parameters.AddWithValue("@email", person.email);
+            connection.Open();
             command.ExecuteNonQuery();
+            connection.Close();
             return Ok(person);
         }
     }

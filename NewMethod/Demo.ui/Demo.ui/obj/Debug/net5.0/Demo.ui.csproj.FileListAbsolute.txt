@@ -70,3 +70,11 @@ E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\Demo.A
 E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\obj\Debug\net5.0\Demo.ui.MvcApplicationPartsAssemblyInfo.cs
 E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\obj\Debug\net5.0\RazorDeclaration\Pages\GridView.razor.g.cs
 E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\obj\Debug\net5.0\Razor\Pages\GridView.razor.g.cs
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\System.Data.SqlClient.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\obj\Debug\net5.0\RazorDeclaration\Pages\PersonsPage.razor.g.cs
+E:\WadeProject\Wet-Project-Web\NewMethod\Demo.ui\Demo.ui\obj\Debug\net5.0\Razor\Pages\PersonsPage.razor.g.cs

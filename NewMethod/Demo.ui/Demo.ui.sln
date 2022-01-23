@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.ui", "Demo.ui\Demo.ui.csproj", "{75EF684B-0386-46DE-8721-8CCA8836BF6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.ui", "Demo.ui\Demo.ui.csproj", "{75EF684B-0386-46DE-8721-8CCA8836BF6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Api", "Demo.Api\Demo.Api.csproj", "{ED8F5432-8D15-48A0-B05E-6391CC3996C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Api", "Demo.Api\Demo.Api.csproj", "{ED8F5432-8D15-48A0-B05E-6391CC3996C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
