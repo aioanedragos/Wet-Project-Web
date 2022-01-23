@@ -1,6 +1,5 @@
 ﻿@page "/person"
-
-@inject HttpClient Http
+@inject PersonService personService
 
 <h1>People Page</h1>
 
@@ -23,7 +22,8 @@
     {
         //ProductController person = new ProductController();
         //person.insertPeople(newPerson);
-        Http.get
-
+        @* this.Http.Post *@
+        @* Http.postAsync(); *@
+        await this.personService.InsertPerson(newPerson);
     }
 }
