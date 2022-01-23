@@ -10,5 +10,6 @@ namespace wet_api.Data
     }
 
     public DbSet<Device> Devices { get; set; }
+    public DbSet<Person> Persons { get; set; }
   }
 }

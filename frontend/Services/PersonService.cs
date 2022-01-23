@@ -13,7 +13,7 @@ namespace wet_ui.Services
 
     public Task InsertPerson(Person person)
     {
-      return this._httpClient.PostAsJsonAsync<Person>("/api/person/insertPeople", person);
+      return this._httpClient.PostAsJsonAsync<Person>("api/Person/insertPeople", person);
     }
   }
 }
