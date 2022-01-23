@@ -1,0 +1,24 @@
+@page "/devices"
+@inject DeviceService deviceService
+@inject ILogger<DeviceList> logger  
+
+<PageTitle>Device List</PageTitle>
+
+@if (devices == null)
+{
+  <p><em>Loading...</em></p>
+} else {
+  <p>Device List</p>
+  @foreach(var device in devices) {
+    <p>@device.Title</p>
+  }
+}
+
+@code {
+  private IEnumerable<Device> devices;
+
+  protected override async Task OnInitializedAsync() {
+    this.logger.LogWarning("start on initiatized");
+    this.devices = await this.deviceService.GetDevices();
+  }
+}
