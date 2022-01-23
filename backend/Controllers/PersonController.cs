@@ -23,10 +23,11 @@ namespace wet_api.Controllers
 
         [HttpPost]
         [Route("insertPeople")]
-        public IActionResult insertPeople(Person person)
+        public async Task<IActionResult> insertPeople(Person person)
         {
 
             this._dbContext.Persons.Add(person);
+            await _dbContext.SaveChangesAsync();
         /*    string query = "INSERT INTO Persons (firstName, lastName, email) VALUES (@lastName, @firstName, @email)";
             SqlConnection connection = new SqlConnection(ConnectionStringName);
             SqlCommand command = new SqlCommand(query, connection);
