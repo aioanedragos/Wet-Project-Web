@@ -6,19 +6,30 @@
 
 @if (devices == null)
 {
-  <p><em>Loading...</em></p>
+  <h1 style="margin-bottom: 200px;">Loading your devices...</h1>
+    <div class="loader">Loading...</div>
 } else {
-  <p>Device List</p>
-  @foreach(var device in devices) {
-    <p>@device.Title</p>
-  }
+  <div class="row">
+      <h1>Your Deviecs</h1>
+     
+          @foreach (var device  in devices)
+         {
+          <div class="column">
+            <div class="card">
+              <h3>@device.Title</h3>
+              <p class="text" data-toggle="tooltip" data-placement="top" title="@($"{device.Description}")">@device.Description</p>
+              <a type="button" class="btn btn-outline-primary fixed-bottom on-bottom-of-element margin-16-px" href="@($"device/{device.Id}")">Device Info</a>
+            </div>
+          </div>
+         }
+   </div>
 }
 
 @code {
-  private IEnumerable<Device> devices;
+    private IEnumerable<Device> devices;
 
-  protected override async Task OnInitializedAsync() {
-    this.logger.LogWarning("start on initiatized");
-    this.devices = await this.deviceService.GetDevices();
-  }
+    protected override async Task OnInitializedAsync() {
+        this.logger.LogWarning("start on initiatized");
+        this.devices = await this.deviceService.GetDevices();
+    }
 }
