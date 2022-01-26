@@ -16,7 +16,18 @@ public class DeviceController : ControllerBase
   [HttpGet]
   public async Task<ActionResult<List<Device>>> Get()
   {
-    var devices = _dbContext.Devices.ToList();
+        var devices = new List<Device> {
+       new Device("Light bulb", "RGB light buleqwedqwdbqwdbqwbdkqhwgdkqhwkdhkqwjhdkjqwhkjdhb"),
+       new Device("Air conditioner"),
+       new Device("Light bulb", "RGB light bulb"),
+       new Device("Air conditioner"),
+       new Device("Light bulb", "RGB light bulb"),
+       new Device("Air conditioner"),
+       new Device("Light bulb", "RGB light bulb"),
+       new Device("Air conditioner")
+     };
+     
+        //var devices = _dbContext.Devices.ToList();
 
     return Ok(devices);
   }

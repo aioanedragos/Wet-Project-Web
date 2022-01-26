@@ -8,13 +8,18 @@
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
+    <link href="css/DeviceList.css" rel="stylesheet" />
     <link href="wet-ui.styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
 </head>
 
 <body>
-    <div id="app">Loading...</div>
+    <div id="app">
+        <h1 style="width:100%; text-align:center; margin-top: 200px;">Loading...</h1>
+        <div class="loader">Loading...</div>
+    </div>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -22,6 +27,7 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+
 </body>
 
 </html>
