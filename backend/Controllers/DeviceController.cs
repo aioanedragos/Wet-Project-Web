@@ -61,11 +61,11 @@ public class DeviceController : ControllerBase
         using (var httpClient = new HttpClient())
         {
             var data = await httpClient.GetFromJsonAsync<DeviceResponseDto>(new Uri(url));
-            System.Console.WriteLine(data);
+            /*System.Console.WriteLine(data);
             var device = new Device(data.Title, data.Description);
             this._dbContext.Devices.Add(device);
-            await _dbContext.SaveChangesAsync();
-            return Ok(device);
+            await _dbContext.SaveChangesAsync();*/
+            return Ok("ceva");
         }
     }
 

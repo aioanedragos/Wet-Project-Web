@@ -17,7 +17,8 @@ namespace wet_api.test_functions
 
             var vefifyUrl = "/User/" + emailFor + "/" + "1";
             //var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, vefifyUrl);
-            var link = "asdfdgfghftrfewdrgth";
+            //var link = "asdfdgfghftrfewdrgth";
+            var link = WebRequest.CreateHttp("https://localhost:7117/api/Person/insertPeople");
             var fromEmail = new MailAddress("dragosaioane1997@gmail.com", "Validation User");
             var toEmail = new MailAddress(emailID);
             var fromEmailPassword = "Colosal13245.";
