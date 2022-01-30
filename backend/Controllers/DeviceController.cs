@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using wet_api.Dtos;
+using System.Collections.Generic;
 
 namespace wet_api.Controllers;
 
@@ -63,6 +64,10 @@ public class DeviceController : ControllerBase
             var data = await httpClient.GetFromJsonAsync<DeviceResponseDto>(new Uri(url));
             System.Console.WriteLine(data);
             var device = new Device(data.Title, data.Description);
+            device.Base = data.Base;
+            device.Href = data.Href;
+            device.Properties = data.Properties;
+            device.Actions = data.Actions;
             this._dbContext.Devices.Add(device);
             await _dbContext.SaveChangesAsync();
             return Ok(device);
@@ -111,5 +116,64 @@ public class DeviceController : ControllerBase
         this._dbContext.Devices.Remove(dbDevice);
         await this._dbContext.SaveChangesAsync();
         return Ok(true);
+    }
+
+    [HttpGet]
+    [Route("{deviceId}/properties")]
+    public async Task<ActionResult> GetProperties(string deviceId)
+    {
+        var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
+        if (!isValidGuid)
+        {
+            return BadRequest("Invalid id");
+        }
+
+        var device = await this._dbContext.Devices.FindAsync(parsedId);
+        if (device == null)
+        {
+            return NotFound("Device not found");
+        }
+
+        using (var httpClient = new HttpClient())
+        {
+            var data = await httpClient.GetFromJsonAsync<Dictionary<string, object>>(new Uri($"{device.Base}/properties"));
+            System.Console.WriteLine(data);
+            return Ok(data);
+        }
+    }
+
+
+    [HttpPatch]
+    [Route("{deviceId}/properties/{propertyName}")]
+    public async Task<ActionResult> updateProperty(string deviceId, string propertyName, [FromBody] string newVal)
+    {
+        var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
+        if (!isValidGuid)
+        {
+            return BadRequest("Invalid id");
+        }
+
+        var device = await this._dbContext.Devices.FindAsync(parsedId);
+        if (device == null)
+        {
+            return NotFound("Device not found");
+        }
+
+        using (var httpClient = new HttpClient())
+        {
+            var data = await httpClient.PutAsJsonAsync(new Uri($"{device.Base}/properties/{propertyName}"), new
+            {
+                propertyName = newVal
+            });
+            System.Console.WriteLine(data);
+            return Ok(data);
+        }
+    }
+
+    [HttpPut]
+    [Route("{deviceId}/{command}")]
+    public async Task executeAction()
+    {
+
     }
 }

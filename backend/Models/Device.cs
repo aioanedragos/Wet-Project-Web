@@ -1,15 +1,31 @@
-public class Device 
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace wet_api.Data
 {
-  public Device(string title, string? description = null)
-  {
-    this.Id = Guid.NewGuid();
-    this.Title = title;
-    this.Description = description;
-  }
+    public class Device
+    {
+        public Device(string title, string? description = null)
+        {
+            this.Id = Guid.NewGuid();
+            this.Title = title;
+            this.Description = description;
+        }
 
-  public Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-  public string Title { get; set; }
+        public string Title { get; set; }
 
-  public string? Description { get; set; }  
+        public string? Description { get; set; }
+
+        public string? Base { get; set; }
+
+        public string? Href { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public Dictionary<string, Property>? Properties { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public Dictionary<string, Action>? Actions { get; set; }
+    }
 }

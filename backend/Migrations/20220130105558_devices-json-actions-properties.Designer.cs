@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using wet_api.Data;
@@ -12,9 +13,10 @@ using wet_api.Data;
 namespace wet_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220130105558_devices-json-actions-properties")]
+    partial class devicesjsonactionsproperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +32,7 @@ namespace wet_api.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<Dictionary<string, wet_api.Data.Action>>("Actions")
+                        .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Base")
@@ -42,6 +45,7 @@ namespace wet_api.Migrations
                         .HasColumnType("text");
 
                     b.Property<Dictionary<string, Property>>("Properties")
+                        .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<string>("Title")
