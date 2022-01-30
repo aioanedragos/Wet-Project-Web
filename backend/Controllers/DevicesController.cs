@@ -156,7 +156,7 @@ public class DevicesController : ControllerBase
 
     [HttpPatch]
     [Route("{deviceId}/properties/{propertyName}")]
-    public async Task<ActionResult> updateProperty(string deviceId, string propertyName, [FromBody] string newVal)
+    public async Task<ActionResult> updateProperty(string deviceId, string propertyName, [FromBody]object newVal)
     {
         var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
         if (!isValidGuid)
@@ -172,10 +172,8 @@ public class DevicesController : ControllerBase
 
         using (var httpClient = new HttpClient())
         {
-            var data = await httpClient.PutAsJsonAsync(new Uri($"{device.Base}/properties/{propertyName}"), new
-            {
-                propertyName = newVal
-            });
+
+            var data = await httpClient.PutAsJsonAsync(new Uri($"{device.Base}/properties/{propertyName}"), new Dictionary<string, object> {{propertyName, newVal}});
             System.Console.WriteLine(data);
             return Ok(data);
         }
