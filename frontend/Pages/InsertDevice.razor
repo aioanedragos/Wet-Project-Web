@@ -1,0 +1,35 @@
+﻿@page "/insert/device"
+@inject DeviceService deviceService
+
+<h1>Device Page</h1>
+
+<h4>Insert New Device</h4>
+
+<EditForm Model="@deviceData" OnValidSubmit="@InsertDevice1">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="firstName" @bind-Value="deviceData.Url" />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    @* private Person newPerson = new Person(); *@
+    public class DeviceData 
+    {
+        public string Url { get; set; }
+    }
+
+    private DeviceData deviceData = new DeviceData();
+    private string url = "";
+
+    private async Task InsertDevice1()
+    {
+        //ProductController person = new ProductController();
+        //person.insertPeople(newPerson);
+        @* this.Http.Post *@
+        @* Http.postAsync(); *@
+        await this.deviceService.addDevice(deviceData.Url);
+    }
+}
