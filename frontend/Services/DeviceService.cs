@@ -18,5 +18,10 @@ namespace wet_ui.Services
       var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/devices");
       return response;
     }
+
+        public Task addDevice(string url)
+    {
+        return this._httpClient.PostAsJsonAsync<string>("insert/device", url);
+    }
   }
 }
