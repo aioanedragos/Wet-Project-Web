@@ -21,7 +21,7 @@ namespace wet_ui.Services
 
         public Task addDevice(string url)
     {
-        return this._httpClient.PostAsJsonAsync<string>("insert/device", url);
+        return this._httpClient.PostAsJsonAsync("api/Device", new { Url = url} );
     }
   }
 }

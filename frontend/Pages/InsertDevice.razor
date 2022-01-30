@@ -5,17 +5,24 @@
 
 <h4>Insert New Device</h4>
 
-<EditForm Model="@newPerson" OnValidSubmit="@InsertDevice1">
+<EditForm Model="@deviceData" OnValidSubmit="@InsertDevice1">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <InputText id="firstName" @bind-Value="newPerson.firstName" />
+    <InputText id="firstName" @bind-Value="deviceData.Url" />
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {
-    private Person newPerson = new Person();
+    @* private Person newPerson = new Person(); *@
+    public class DeviceData 
+    {
+        public string Url { get; set; }
+    }
+
+    private DeviceData deviceData = new DeviceData();
+    private string url = "";
 
     private async Task InsertDevice1()
     {
@@ -23,6 +30,6 @@
         //person.insertPeople(newPerson);
         @* this.Http.Post *@
         @* Http.postAsync(); *@
-        await this.deviceService.addDevice(newPerson.firstName);
+        await this.deviceService.addDevice(deviceData.Url);
     }
 }
