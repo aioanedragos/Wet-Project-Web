@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.AspNetCore.Authorization;
 using wet_api.Dtos;
-using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace wet_api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DeviceController : ControllerBase
+public class DevicesController : ControllerBase
 {
     private readonly DataContext _dbContext;
-    public DeviceController(DataContext dataContext)
+    public DevicesController(DataContext dataContext)
     {
         this._dbContext = dataContext;
     }
@@ -53,12 +53,14 @@ public class DeviceController : ControllerBase
         return Ok(device);
     }
 
-    [HttpPost]
+    [HttpPost, Authorize]
     public async Task<ActionResult<Device>> addDevice(AddDeviceDto deviceData)
     {
         // device.Id = Guid.NewGuid();
         // this._dbContext.Devices.Add(device);
         // await _dbContext.SaveChangesAsync();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        System.Console.WriteLine(userId);
         using (var httpClient = new HttpClient())
         {
             var data = await httpClient.GetFromJsonAsync<DeviceResponseDto>(new Uri(deviceData.Url));

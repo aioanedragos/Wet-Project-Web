@@ -15,7 +15,7 @@ namespace wet_ui.Services
     {
       var logger = LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Debug)).CreateLogger<DeviceService>();
       logger.LogCritical("Started fetch for devices!");
-      var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/devices");
+      var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices");
       return response;
     }
 
