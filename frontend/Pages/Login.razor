@@ -1,0 +1,29 @@
+﻿@page "/Login"
+@inject AuthService authService
+
+<h1>Auth Page</h1>
+
+<h4>Get Registered</h4>
+
+<EditForm Model="@newPerson" OnValidSubmit="@LoginPerson">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="emailAddress" @bind-Value="newPerson.Email" />
+    <InputText id="password" @bind-Value="newPerson.Password" type="password" />
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    private UserLoginDto newPerson = new UserLoginDto();
+
+    private async Task LoginPerson()
+    {
+        //ProductController person = new ProductController();
+        //person.insertPeople(newPerson);
+        @* this.Http.Post *@
+        @* Http.postAsync(); *@
+        await this.authService.LoginPerson(newPerson);
+    }
+}

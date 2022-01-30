@@ -12,6 +12,7 @@ string apiBaseUrl = "https://localhost:7117";
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped(sp => new DeviceService(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }));
 builder.Services.AddScoped(sp => new PersonService(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }));
+builder.Services.AddScoped(sp => new AuthService(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }));
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Services.AddLogging();
 
