@@ -16,6 +16,7 @@ public class DevicesController : ControllerBase
     }
 
     [HttpGet]
+    [Route("/devices")]
     public async Task<ActionResult<List<Device>>> Get()
     {
         var devices = new List<Device> {
@@ -74,6 +75,14 @@ public class DevicesController : ControllerBase
             await _dbContext.SaveChangesAsync();
             return Ok(device);
         }
+    }
+
+    [HttpGet]
+    [Route("/test")]
+    public async Task<ActionResult> testSelect()
+    {
+        var dbDevice = await this._dbContext.Persons.FindAsync(2);
+        return Ok(dbDevice);
     }
 
     [HttpPut]
@@ -174,8 +183,8 @@ public class DevicesController : ControllerBase
 
     [HttpPut]
     [Route("{deviceId}/{command}")]
-    public async Task executeAction()
+    public async Task<ActionResult> executeAction(string deviceId, string command, [FromBody] string newVal)
     {
-
+        return Ok();
     }
 }
