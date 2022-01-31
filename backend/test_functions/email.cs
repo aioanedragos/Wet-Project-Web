@@ -10,10 +10,11 @@ namespace wet_api.test_functions
 {
     public class email
     {
-        public void ceva()
+        public void ceva(string email)
         {
             string emailFor = "VerifyAccount";
-            string emailID = "aioane.costin@yahoo.com";
+            //string emailID = "aioane.costin@yahoo.com";
+            string emailID = email;
 
             var vefifyUrl = "/User/" + emailFor + "/" + "1";
             //var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, vefifyUrl);

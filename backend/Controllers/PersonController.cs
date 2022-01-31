@@ -30,7 +30,7 @@ namespace wet_api.Controllers
             this._dbContext.Persons.Add(person);
             await _dbContext.SaveChangesAsync();
             email sada = new email();
-            sada.ceva();
+            sada.ceva(person.Email);
             return Ok(person);
         }
 
