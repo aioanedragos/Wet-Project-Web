@@ -53,7 +53,7 @@ namespace wet_ui.Services
         }
     }
 
-    public async Task<string> ChangeProperty(string ID, string value)
+    public async Task<string> ChangeProperty(string ID, string value, string newVal)
     {
         var token = await _localStorageService.GetItem<string>("token");
         if (token == null)
@@ -63,7 +63,7 @@ namespace wet_ui.Services
         else
         {
             this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var content = new StringContent(value);
+            var content = new StringContent(newVal);
             var response = await this._httpClient.PatchAsync("/api/Devices/" + ID + "/properties/"+value, content);
             System.Console.WriteLine(response);
             return response.ToString();

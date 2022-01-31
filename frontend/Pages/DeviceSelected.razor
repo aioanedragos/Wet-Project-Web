@@ -45,6 +45,6 @@
 
         public async void UpdateHeading()
         {
-            await this.deviceService.ChangeProperty(ID, "on");
+            await this.deviceService.ChangeProperty(ID, "on", "false");
         }
     }
