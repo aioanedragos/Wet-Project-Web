@@ -23,7 +23,7 @@ namespace wet_ui.Services
     }
     else
     {
-        this._httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+        this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices/");
         System.Console.WriteLine(response);
         return response;
