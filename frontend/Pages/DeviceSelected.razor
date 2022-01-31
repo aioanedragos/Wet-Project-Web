@@ -11,30 +11,40 @@
 
 <h3>@properties</h3>
 
-@code {
-    [Parameter]
-    public string? ID { get; set; }
+<button @onclick=@UpdateHeading>
+    Update heading
+</button>
 
-    protected override void OnInitialized()
-    {
-        ID = ID ?? "fantastic";
-    }
+    @code {
+        [Parameter]
+        public string? ID { get; set; }
 
-    private JsonElement properties;
-    protected override async Task OnInitializedAsync()
-    {
-        if (await _localStorageService.GetItem<string>("token") != null)
+        protected override void OnInitialized()
         {
-            this.logger.LogWarning("start on initiatized");
-           this.properties = await this.deviceService.Properties(ID);
-           this.properties = properties.GetProperty("value");
-           @* var jo = JObject.Parse(await this.deviceService.Properties(ID));
-            var id = jo["value"]["on"].ToString();*@
-            //Console.WriteLine(properties.GetProperty("value"));
+            ID = ID ?? "fantastic";
         }
-        else
+
+        private JsonElement properties;
+        protected override async Task OnInitializedAsync()
         {
-            NavManager.NavigateTo("/Login", true);
+            if (await _localStorageService.GetItem<string>("token") != null)
+            {
+                this.logger.LogWarning("start on initiatized");
+
+                this.properties = await this.deviceService.Properties(ID);
+                this.properties = properties.GetProperty("value");
+                @* var jo = JObject.Parse(await this.deviceService.Properties(ID));
+                    var id = jo["value"]["on"].ToString();*@
+                //Console.WriteLine(properties.GetProperty("value"));
+            }
+            else
+            {
+                NavManager.NavigateTo("/Login", true);
+            }
+        }
+
+        public async void UpdateHeading()
+        {
+            await this.deviceService.ChangeProperty(ID, "on");
         }
     }
-}
