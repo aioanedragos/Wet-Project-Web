@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace wet_ui.Services
 {
@@ -23,7 +24,7 @@ namespace wet_ui.Services
     }
     else
     {
-        this._httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+        this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices/");
         System.Console.WriteLine(response);
         return response;
@@ -34,6 +35,22 @@ namespace wet_ui.Services
       // this._httpClient.DefaultRequestHeaders.Add("Authorization", "")
       var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices/");*/
       //return response;
+    }
+
+    public async Task<JsonElement> Properties(string ID)
+    {
+        var token = await _localStorageService.GetItem<string>("token");
+        if (token == null)
+        {
+            throw new Exception("No token found!");
+        }
+        else
+        {
+            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await this._httpClient.GetFromJsonAsync<JsonElement>("/api/Devices/"+ID+"/properties");
+            System.Console.WriteLine(response);
+            return response;
+        }
     }
 
     public async Task addDevice(string url)

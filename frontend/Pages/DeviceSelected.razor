@@ -1,0 +1,40 @@
+﻿@page "/device/{id}"
+@using System.Text.Json;
+@inject IDeviceService deviceService
+@inject ILogger<DeviceList> logger
+@inject ILocalStorageService _localStorageService
+@inject NavigationManager NavManager
+
+<h1>Blazor is @ID</h1>
+
+<h3>DeviceSelected</h3>
+
+<h3>@properties</h3>
+
+@code {
+    [Parameter]
+    public string? ID { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ID = ID ?? "fantastic";
+    }
+
+    private JsonElement properties;
+    protected override async Task OnInitializedAsync()
+    {
+        if (await _localStorageService.GetItem<string>("token") != null)
+        {
+            this.logger.LogWarning("start on initiatized");
+           this.properties = await this.deviceService.Properties(ID);
+           this.properties = properties.GetProperty("value");
+           @* var jo = JObject.Parse(await this.deviceService.Properties(ID));
+            var id = jo["value"]["on"].ToString();*@
+            //Console.WriteLine(properties.GetProperty("value"));
+        }
+        else
+        {
+            NavManager.NavigateTo("/Login", true);
+        }
+    }
+}
