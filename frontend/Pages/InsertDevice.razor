@@ -1,5 +1,7 @@
 ﻿@page "/insert/device"
 @inject IDeviceService deviceService
+@inject ILocalStorageService _localStorageService
+@inject NavigationManager NavManager
 
 <h1>Device Page</h1>
 
@@ -23,6 +25,12 @@
 
     private DeviceData deviceData = new DeviceData();
     private string url = "";
+
+    protected override async Task OnInitializedAsync() {
+        if (await _localStorageService.GetItem<string>("token") == null) {
+            NavManager.NavigateTo("/Login", true);
+        }
+    }
 
     private async Task InsertDevice1()
     {

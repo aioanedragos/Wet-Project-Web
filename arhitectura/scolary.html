@@ -8,6 +8,11 @@
 #            updated verison: github.com/necolas/normalize.css                #
 ###############################################################################-->
     <link href="ScholarCss.css" type="text/css" rel="stylesheet">
+    <style>
+        .center-content {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <article>
@@ -15,7 +20,7 @@
         <h1 style="text-align: center;">Report<br>W.E.T.(web of things platform)</h1>
     </header>
     <div role="contentinfo">
-        <ol role="directory">
+        <ol style="list-style-type: decimal; margin: 0; padding-left: 25px;" role="directory">
             <li><a href="#abstract">Abstract</a></li>
             <li><a href="#description">Description</a></li>
             <li><a href="#modules">Modules</a></li>
@@ -36,6 +41,9 @@
             </ol>
             <li><a href="#data-model">Data models</a></li>
             <li><a href="#data-model-schema">Data model schema</a></li>
+            <li><a href="#architecture">C4 service architecture</a></li>
+            <li><a href="#use-case">Use-Case diagram</a></li>
+            <li><a href="#bibliography">Bibliography</a></li>
         </ol>
         <dt>Authors</dt>
         <dd>
@@ -54,7 +62,7 @@
     <section id="description" role="doc-introduction">
         <h2>2. Description</h2>
         <p>
-            The project allows the ur to create a list with all IoT devices from home ("smart" bulbs, lockers, air
+            The project allows the user to create a list with all IoT devices from home ("smart" bulbs, lockers, air
             conditioners) and control them using a web application. WET use bluetooth feature from the user device and
             scan for available IoT devices. After the user create a list with all devices from the home can grant access
             right for other people (family, friends, collaborators). That rights can expire after a while or can be
@@ -179,8 +187,87 @@
     </section>
     <section id="data-model-schema">
         <h2>5. Data model schema</h2>
-        <img src="./imgs/db_schema.png">
+        <figure typeof="sa:image">
+            <img
+              src="./imgs/db_schema.png"
+              alt="Data base schema"
+              style="width: 100%"
+            />
+            <figcaption class="center-content">Fig. 1.Data base schema</figcaption>
+        </figure>
+    </section>
+    <section id="architecture">
+        <h2>6. C4 service architecture</h2>
+        <figure typeof="sa:image">
+            <img
+              src="./C4/C4L1.png"
+              alt="Data base schema"
+              style="width: 100%"
+            />
+            <figcaption class="center-content">Fig. 2.C4 Level 1</figcaption>
+        </figure>
+        <figure typeof="sa:image">
+            <img
+              src="./C4/C4L2.png"
+              alt="Data base schema"
+              style="width: 100%"
+            />
+            <figcaption class="center-content">Fig. 3.C4 Level 2</figcaption>
+        </figure>
+        <figure typeof="sa:image">
+            <img
+              src="./C4/C4L3.png"
+              alt="Data base schema"
+              style="width: 100%"
+            />
+            <figcaption class="center-content">Fig. 4.C4 Level 3</figcaption>
+        </figure>
+    </section>
+    <section id="use-case">
+        <h2>7. Use-Case diagram</h2>
+        <figure typeof="sa:image">
+            <img
+              src="./imgs/useCase.png"
+              alt="Use-Case diagram"
+              style="width: 100%"
+            />
+            <figcaption class="center-content">Fig. 5.Use-Case diagram</figcaption>
+        </figure>
     </section>
 </article>
+
+<section id="bibliography" role="doc-bibliography">
+    <h2>Bibliography</h2>
+    <ol>
+      <li typeof="schema:WebPage" role="doc-biblioentry"
+          resource="https://profs.info.uaic.ro/~busaco/teach/courses/wade/web-film.html"id="wade-course">
+        <cite>
+          <a href="https://profs.info.uaic.ro/~busaco/teach/courses/wade/web-film.html">WADe course</a>
+        </cite>
+      </li>
+      <li typeof="schema:WebPage" role="doc-biblioentry"
+          resource="https://github.com/dotnet/iot" id="net-iot-lib">
+        <cite>
+          <a href="https://github.com/dotnet/iot">.NET IoT Libraries</a>
+        </cite> 
+        </li>
+        <li typeof="schema:WebPage" role="doc-biblioentry"
+            resource="https://docs.microsoft.com/ro-ro/aspnet/core/blazor/?WT.mc_id=dotnet-35129-website&view=aspnetcore-6.0" id="blz-off-doc">
+            <cite> 
+                <a href="https://docs.microsoft.com/ro-ro/aspnet/core/blazor/?WT.mc_id=dotnet-35129-website&view=aspnetcore-6.0">Blazor oficial documentation</a>
+            </cite>
+        </li>
+        <li typeof="schema:WebPage" role="doc-biblioentry" resource="https://www.postgresql.org/docs/14/index.html">
+            <cite>
+                <a href="https://www.postgresql.org/docs/14/index.html">Postgresql documentation</a>
+            </cite>
+        </li>
+        <li typeof="schema:WebPage" role="doc-biblioentry" resource="https://docs.microsoft.com/en-us/dotnet/fundamentals/">
+            <cite>
+                <a href="https://docs.microsoft.com/en-us/dotnet/fundamentals/">.NET Core 6 documentation</a>
+            </cite>
+        </li>
+    </ol>
+</section>
 </body>
 </html>

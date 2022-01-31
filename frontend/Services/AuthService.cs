@@ -27,11 +27,18 @@ namespace wet_ui.Services
             return this._httpClient.PostAsJsonAsync<UserRegistrationDto>("api/Auth/register", person);
         }
 
-        public async Task LoginPerson(UserLoginDto person)
+        public async Task<string> LoginPerson(UserLoginDto person)
         {
             var response = await this._httpClient.PostAsJsonAsync<UserLoginDto>("api/Auth/login", person);
             var responseContent = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
-            await this._localStorageService.SetItem("token", responseContent.Token);
+            if(response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                await this._localStorageService.SetItem("token", responseContent.Token);
+                return responseContent.Token;
+            } else
+            {
+                return null;
+            }
         }
     }
 }

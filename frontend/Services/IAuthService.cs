@@ -5,6 +5,6 @@ namespace wet_ui.Services
     {
         public Task RegisterPerson(UserRegistrationDto person);
 
-        public Task LoginPerson(UserLoginDto person);
+        public Task<string> LoginPerson(UserLoginDto person);
     }
 }

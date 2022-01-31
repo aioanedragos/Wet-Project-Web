@@ -16,11 +16,24 @@ namespace wet_ui.Services
 
     public async Task<IEnumerable<Device>> GetDevices()
     {
-      var logger = LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Debug)).CreateLogger<DeviceService>();
+    var token = await _localStorageService.GetItem<string>("token");
+    if (token == null)
+    {
+        throw new Exception("No token found!");
+    }
+    else
+    {
+        this._httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+        var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices/");
+        System.Console.WriteLine(response);
+        return response;
+    }
+
+         /*   var logger = LoggerFactory.Create(b => b.SetMinimumLevel(LogLevel.Debug)).CreateLogger<DeviceService>();
       logger.LogCritical("Started fetch for devices!");
       // this._httpClient.DefaultRequestHeaders.Add("Authorization", "")
-      var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices");
-      return response;
+      var response = await this._httpClient.GetFromJsonAsync<IEnumerable<Device>>("/api/devices/");*/
+      //return response;
     }
 
     public async Task addDevice(string url)

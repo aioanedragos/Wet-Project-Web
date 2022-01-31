@@ -1,5 +1,6 @@
 ﻿@page "/Login"
 @inject IAuthService authService
+@inject NavigationManager NavManager
 
 <h1>Auth Page</h1>
 
@@ -24,6 +25,9 @@
         //person.insertPeople(newPerson);
         @* this.Http.Post *@
         @* Http.postAsync(); *@
-        await this.authService.LoginPerson(newPerson);
+        if(await this.authService.LoginPerson(newPerson) != null)
+        {
+            NavManager.NavigateTo("/", true);
+        }
     }
 }
