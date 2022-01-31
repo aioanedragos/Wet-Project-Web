@@ -63,7 +63,7 @@ namespace wet_ui.Services
         else
         {
             this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var content = new StringContent(value);
+            var content = JsonContent.Create<object>(value);
             var response = await this._httpClient.PatchAsync("/api/Devices/" + ID + "/properties/"+value, content);
             System.Console.WriteLine(response);
             return response.ToString();
