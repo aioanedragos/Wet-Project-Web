@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Net.Http.Headers;
 
 namespace wet_ui.Services
 {
@@ -31,7 +32,7 @@ namespace wet_ui.Services
         }
         else
         {
-          this._httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+          this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
           var response = this._httpClient.PostAsJsonAsync("api/Devices", new { Url = url} );
           System.Console.WriteLine(response);
         }
