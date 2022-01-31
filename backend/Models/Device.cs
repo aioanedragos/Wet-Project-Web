@@ -22,6 +22,8 @@ namespace wet_api.Data
 
         public string? Href { get; set; }
 
+        public int UserId { get; set; }
+
         [Column(TypeName = "jsonb")]
         public Dictionary<string, Property>? Properties { get; set; }
 
