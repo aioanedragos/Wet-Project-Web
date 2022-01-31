@@ -1,6 +1,8 @@
 @page "/devices"
 @inject IDeviceService deviceService
 @inject ILogger<DeviceList> logger  
+@inject ILocalStorageService _localStorageService
+@inject NavigationManager NavManager
 
 <PageTitle>Device List</PageTitle>
 
@@ -27,9 +29,16 @@
 
 @code {
     private IEnumerable<Device> devices;
+    private string token = null;
 
     protected override async Task OnInitializedAsync() {
-        this.logger.LogWarning("start on initiatized");
-        this.devices = await this.deviceService.GetDevices();
+        if (await _localStorageService.GetItem<string>("token") != null)
+        {
+            this.logger.LogWarning("start on initiatized");
+            this.devices = await this.deviceService.GetDevices();
+        } else
+        {
+            NavManager.NavigateTo("/Login", true);
+        }
     }
 }
