@@ -17,7 +17,6 @@ public class DevicesController : ControllerBase
 
     [Authorize]
     [HttpGet]
-    [Route("/devices")]
     public async Task<ActionResult<List<Device>>> Get()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

@@ -2380,24 +2380,34 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\danyb\\.nuget\\packages\\": {}
+    "C:\\Users\\drago\\.nuget\\packages\\": {},
+    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj",
+      "projectUniqueName": "E:\\WadeProject\\Wet-Project-Web\\backend\\wet-api.csproj",
       "projectName": "wet-api",
-      "projectPath": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\wet-api.csproj",
-      "packagesPath": "C:\\Users\\danyb\\.nuget\\packages\\",
-      "outputPath": "H:\\facultate\\Wade\\project\\Wet-Project-Web\\backend\\obj\\",
+      "projectPath": "E:\\WadeProject\\Wet-Project-Web\\backend\\wet-api.csproj",
+      "packagesPath": "C:\\Users\\drago\\.nuget\\packages\\",
+      "outputPath": "E:\\WadeProject\\Wet-Project-Web\\backend\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\danyb\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\drago\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
