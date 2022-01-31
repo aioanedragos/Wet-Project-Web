@@ -174,7 +174,7 @@ public class DevicesController : ControllerBase
         {
             var data = await httpClient.GetFromJsonAsync<Dictionary<string, object>>(new Uri($"{device.Base}/properties"));
             System.Console.WriteLine(data);
-            return Ok(data);
+            return Ok(new JsonResult(data));
         }
     }
 
