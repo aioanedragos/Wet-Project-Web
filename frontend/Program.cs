@@ -9,10 +9,13 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 string apiBaseUrl = "https://localhost:7117";
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped(sp => new DeviceService(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }));
-builder.Services.AddScoped(sp => new PersonService(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }));
-builder.Services.AddScoped(sp => new AuthService(new HttpClient { BaseAddress = new Uri(apiBaseUrl) }));
+// builder.Services.AddApiAuthorization();
+builder.Services.AddScoped<IPersonService, PersonService>()
+    .AddScoped<IDeviceService, DeviceService>()
+    .AddScoped<IAuthService, AuthService>()
+    .AddScoped<ILocalStorageService, LocalStorageService>();
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration["apiUrl"]) });
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 builder.Services.AddLogging();
 

@@ -61,7 +61,7 @@ namespace wet_api.Controllers
             // if passwords match, return token
             var token = this.CreateToken(registeredUser);
 
-            return Ok(token);
+            return Ok(new {Token = token});
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
