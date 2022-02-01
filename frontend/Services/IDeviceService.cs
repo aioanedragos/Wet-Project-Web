@@ -7,6 +7,6 @@ namespace wet_ui.Services
     public Task<IEnumerable<Device>> GetDevices();
     public Task addDevice(string url);
     public Task<JsonElement> Properties(string ID);
-    public Task<string> ChangeProperty(string ID, string value, string newVal);
+    public Task<string> ChangeProperty(string ID, string value, object newVal);
   }
 }

@@ -53,7 +53,7 @@ namespace wet_ui.Services
         }
     }
 
-    public async Task<string> ChangeProperty(string ID, string value, string newVal)
+    public async Task<string> ChangeProperty(string ID, string value, object newVal)
     {
         var token = await _localStorageService.GetItem<string>("token");
         if (token == null)

@@ -1,5 +1,6 @@
 ﻿@page "/device/{id}"
 @using System.Text.Json;
+@inject NavigationManager uriHelper;
 @inject IDeviceService deviceService
 @inject ILogger<DeviceList> logger
 @inject ILocalStorageService _localStorageService
@@ -15,36 +16,39 @@
     Update heading
 </button>
 
-    @code {
-        [Parameter]
-        public string? ID { get; set; }
+@code {
+    [Parameter]
+    public string? ID { get; set; }
 
-        protected override void OnInitialized()
+    protected override void OnInitialized()
+    {
+        ID = ID ?? "fantastic";
+    }
+
+    private JsonElement properties;
+    protected override async Task OnInitializedAsync()
+    {
+        if (await _localStorageService.GetItem<string>("token") != null)
         {
-            ID = ID ?? "fantastic";
+            this.logger.LogWarning("start on initiatized");
+
+            this.properties = await this.deviceService.Properties(ID);
+            this.properties = properties.GetProperty("value");
+            @* var jo = JObject.Parse(await this.deviceService.Properties(ID));
+                var id = jo["value"]["on"].ToString();*@
+            //Console.WriteLine(properties.GetProperty("value"));
         }
-
-        private JsonElement properties;
-        protected override async Task OnInitializedAsync()
+        else
         {
-            if (await _localStorageService.GetItem<string>("token") != null)
-            {
-                this.logger.LogWarning("start on initiatized");
-
-                this.properties = await this.deviceService.Properties(ID);
-                this.properties = properties.GetProperty("value");
-                @* var jo = JObject.Parse(await this.deviceService.Properties(ID));
-                    var id = jo["value"]["on"].ToString();*@
-                //Console.WriteLine(properties.GetProperty("value"));
-            }
-            else
-            {
-                NavManager.NavigateTo("/Login", true);
-            }
-        }
-
-        public async void UpdateHeading()
-        {
-            await this.deviceService.ChangeProperty(ID, "on", "true");
+            NavManager.NavigateTo("/Login", true);
         }
     }
+
+    public async void UpdateHeading()
+    {
+        await this.deviceService.ChangeProperty(ID, "on", true);
+        this.properties = await this.deviceService.Properties(ID);
+        this.properties = properties.GetProperty("value");
+        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+    }
+}
