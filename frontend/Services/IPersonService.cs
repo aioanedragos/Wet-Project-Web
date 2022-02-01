@@ -5,5 +5,6 @@ namespace wet_ui.Services
   {
     public Task InsertPerson(Person person);
     public Task<bool> GiveAcces(GiveAccessDto person);
+    public Task<IEnumerable<DeviceAccessDto>> GetAccessListForDevice(string deviceId);
   }
 }

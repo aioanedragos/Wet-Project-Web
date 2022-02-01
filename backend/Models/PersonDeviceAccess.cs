@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 
 namespace wet_api.Data
 {
@@ -8,6 +9,7 @@ namespace wet_api.Data
         READ_WRITE = 2
     }
 
+    [Index(nameof(DeviceId), nameof(UserId), IsUnique = true)]
     public class PersonDeviceAccess
     {
         public Guid Id { get; set; }
