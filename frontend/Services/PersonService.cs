@@ -50,5 +50,20 @@ namespace wet_ui.Services
             return acessList;
         }
     }
+
+    public async Task<bool> RevokeAccess(string accessId)
+    {
+        var token = await _localStorageService.GetItem<string>("token");
+        if (token == null)
+        {
+            throw new Exception("No token found!");
+        }
+        else
+        {
+            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var respons = await this._httpClient.DeleteAsync($"api/Person/access/{accessId}");
+            return respons.Content.ReadFromJsonAsync<bool>().Result;
+        }
+    }
   }
 }

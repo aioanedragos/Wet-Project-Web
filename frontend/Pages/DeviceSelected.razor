@@ -51,7 +51,7 @@ else
         People who can access this device:
         @foreach (var accesor in deviceAccessList)
         {
-            <p>@accesor.Email with @accesor.ControlType access</p>
+            <p>@accesor.Email with @accesor.ControlType access   <span><a type="button" class="btn btn-outline-danger" @onclick="() => RevokeAccess(accesor.Id)">Revoke</a></span></p>
         }
     </div>
 }
@@ -90,6 +90,16 @@ else
         await this.deviceService.ChangeProperty(ID, propertyName, value);
         this.properties = await this.deviceService.Properties(ID);
         this.properties = properties.GetProperty("value");
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    private async void RevokeAccess(string accessId)
+    {
+        await this.personService.RevokeAccess(accessId);
+        this.deviceAccessList = await this.personService.GetAccessListForDevice(ID);
         await InvokeAsync(() =>
         {
             StateHasChanged();

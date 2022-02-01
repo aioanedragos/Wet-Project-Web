@@ -113,5 +113,34 @@ namespace wet_api.Controllers
             await _dbContext.SaveChangesAsync();
             return Ok();
         }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("access/{accessId}")]
+        public async Task<ActionResult<bool>> RevokeAccess(string accessId)
+        {
+            var isValidGuid = Guid.TryParse(accessId, out var parsedId);
+            if (!isValidGuid)
+            {
+                return BadRequest("Invalid id");
+            }
+
+            var access = await this._dbContext.PersonDeviceAccesses.Where(x => x.Id == parsedId).FirstOrDefaultAsync();
+            if (access == null)
+            {
+                return BadRequest("No access with given id found");
+            }
+
+            var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userAccess = await this._dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId && x.DeviceId == access.DeviceId).FirstOrDefaultAsync();
+            if (userAccess.ControlType != ControlTypes.OWNER)
+            {
+                return BadRequest("Only owner can revoke access");
+            }
+
+            this._dbContext.PersonDeviceAccesses.Remove(access);
+            await _dbContext.SaveChangesAsync();
+            return Ok(true);
+        }
     }
 }
