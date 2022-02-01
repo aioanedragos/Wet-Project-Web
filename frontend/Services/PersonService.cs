@@ -21,9 +21,9 @@ namespace wet_ui.Services
       return this._httpClient.PostAsJsonAsync<Person>("api/Person/insertPeople", person);
     }
 
-    public Task GiveAcces(GiveAccessDto person)
+    public async Task<bool> GiveAcces(GiveAccessDto person)
     {
-        var token = _localStorageService.GetItem<string>("token");
+        var token = await _localStorageService.GetItem<string>("token");
         if (token == null)
         {
             throw new Exception("No token found!");
@@ -31,8 +31,8 @@ namespace wet_ui.Services
         else
         {
             this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var respons = this._httpClient.PostAsJsonAsync<GiveAccessDto>("api/Person", person);
-            return respons;
+            var respons = await this._httpClient.PostAsJsonAsync<GiveAccessDto>("api/Person", person);
+            return true;
         }
     }
   }

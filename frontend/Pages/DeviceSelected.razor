@@ -46,7 +46,7 @@
 
     public async void UpdateHeading()
     {
-        await this.deviceService.ChangeProperty(ID, "on", true);
+        await this.deviceService.ChangeProperty(ID, "on", false);
         this.properties = await this.deviceService.Properties(ID);
         this.properties = properties.GetProperty("value");
         uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
