@@ -12,13 +12,47 @@
 
 <h3>@properties</h3>
 
-<button @onclick=@UpdateHeading>
+@if (device == null)
+{
+    <p><em>Loading...</em></p>
+}
+else 
+{
+    <div>
+        @foreach(var property in device.Properties)
+        {
+            <h3>@property.Key</h3>
+            <p>@property.Value.Title</p>
+            <p>@property.Value.Description</p>
+            <p>@property.Value.Type</p>
+            @if (property.Value.Type == "boolean")
+            {
+                <input type="checkbox"
+                    checked="@properties.GetProperty(property.Key).GetBoolean()"
+                    @onchange="eventArgs => { UpdateHeading(property.Key, eventArgs.Value); }" />
+            }
+            else if (property.Value.Type == "integer")
+            {
+                <input type="number"
+                    value="@properties.GetProperty(property.Key).GetInt32()"
+                    @onchange="eventArgs => { 
+                        var value = Int32.Parse(eventArgs.Value.ToString());
+                        UpdateHeading(property.Key, value);
+                    }" />
+            }
+            <br /><br />
+        }
+    </div>
+}
+
+@* <button @onclick=@UpdateHeading>
     Update heading
-</button>
+</button> *@
 
 @code {
     [Parameter]
     public string? ID { get; set; }
+    private Device? device = null;
 
     protected override void OnInitialized()
     {
@@ -34,6 +68,8 @@
 
             this.properties = await this.deviceService.Properties(ID);
             this.properties = properties.GetProperty("value");
+            System.Console.WriteLine(properties);
+            this.device = await this.deviceService.GetDevice(ID);
             @* var jo = JObject.Parse(await this.deviceService.Properties(ID));
                 var id = jo["value"]["on"].ToString();*@
             //Console.WriteLine(properties.GetProperty("value"));
@@ -44,11 +80,12 @@
         }
     }
 
-    public async void UpdateHeading()
+    public async void UpdateHeading(string propertyName, object value)
     {
-        await this.deviceService.ChangeProperty(ID, "on", false);
+        System.Console.WriteLine(value.GetType());
+        await this.deviceService.ChangeProperty(ID, propertyName, value);
         this.properties = await this.deviceService.Properties(ID);
         this.properties = properties.GetProperty("value");
-        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+        @* uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true); *@
     }
 }

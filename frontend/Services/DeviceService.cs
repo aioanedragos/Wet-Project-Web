@@ -81,8 +81,23 @@ namespace wet_ui.Services
         else
         {
           this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-          var response = this._httpClient.PostAsJsonAsync("api/Devices", new { Url = url} );
-          System.Console.WriteLine(response);
+          var response = await this._httpClient.PostAsJsonAsync("api/Devices", new { Url = url} );
+        }
+    }
+
+    public async Task<Device> GetDevice(string id)
+    {
+        var token = await _localStorageService.GetItem<string>("token");
+        if (token == null)
+        {
+            throw new Exception("No token found!");
+        }
+        else
+        {
+            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await this._httpClient.GetFromJsonAsync<Device>("/api/Devices/"+id);
+            System.Console.WriteLine(response);
+            return response;
         }
     }
   }
