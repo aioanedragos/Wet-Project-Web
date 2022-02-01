@@ -9,5 +9,6 @@ namespace wet_ui.Services
     public Task<JsonElement> Properties(string ID);
     public Task<string> ChangeProperty(string ID, string value, object newVal);
     public Task<Device> GetDevice(string id);
+    public Task<bool> DeleteDevice(string id);
   }
 }

@@ -1,6 +1,6 @@
 @page "/devices"
 @inject IDeviceService deviceService
-@inject ILogger<DeviceList> logger  
+@inject ILogger<DeviceList> logger
 @inject ILocalStorageService _localStorageService
 @inject NavigationManager NavManager
 
@@ -9,36 +9,61 @@
 @if (devices == null)
 {
   <h1 style="width:100%; text-align:center; margin-top: 200px;">Loading your devices...</h1>
-    <div class="loader">Loading...</div>
-} else {
+  <div class="loader">Loading...</div>
+}
+else
+{
   <div class="row">
-      <h1>Your Devices</h1>
-     
-          @foreach (var device  in devices)
-         {
-          <div class="column">
-            <div class="card">
-              <h3>@device.Title</h3>
-              <p class="text" data-toggle="tooltip" data-placement="top" title="@($"{device.Description}")">@device.Description</p>
-              <a type="button" class="btn btn-outline-primary fixed-bottom on-bottom-of-element margin-16-px" href="@($"device/{device.Id}")">Device Info</a>
-            </div>
-          </div>
-         }
-   </div>
+    <h1>Your Devices</h1>
+
+    @foreach (var device in devices)
+    {
+      <div class="column">
+        <div class="card">
+          <h3>@device.Title</h3>
+          <p class="text" data-toggle="tooltip" data-placement="top" title="@($"{device.Description}")">@device.Description
+          </p>
+          <a type="button" class="btn btn-outline-primary fixed-bottom on-bottom-of-element info-btn"
+        href="@($"device/{device.Id}")">Device Info</a>
+          <a type="button" class="btn btn-outline-danger fixed-bottom on-bottom-of-element margin-16-px"
+        @onclick="() => deleteDevice(device.Id)">Delete device</a>
+        </div>
+      </div>
+    }
+  </div>
 }
 
 @code {
-    private IEnumerable<Device> devices;
-    private string token = null;
+  private IEnumerable<Device> devices;
+  private string token = null;
 
-    protected override async Task OnInitializedAsync() {
-        if (await _localStorageService.GetItem<string>("token") != null)
-        {
-            this.logger.LogWarning("start on initiatized");
-            this.devices = await this.deviceService.GetDevices();
-        } else
-        {
-            NavManager.NavigateTo("/Login", true);
-        }
+  protected override async Task OnInitializedAsync()
+  {
+    if (await _localStorageService.GetItem<string>("token") != null)
+    {
+      this.logger.LogWarning("start on initiatized");
+      this.devices = await this.deviceService.GetDevices();
     }
+    else
+    {
+      NavManager.NavigateTo("/Login", true);
+    }
+  }
+
+  private async Task deleteDevice(string deviceId)
+  {
+    var isGood = await this.deviceService.DeleteDevice(deviceId);
+    if (!isGood)
+    {
+      // show some error to user
+    }
+    else
+    {
+      this.devices = await this.deviceService.GetDevices();
+      await InvokeAsync(() =>
+      {
+        StateHasChanged();
+      });
+    }
+  }
 }

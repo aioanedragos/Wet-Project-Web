@@ -100,5 +100,21 @@ namespace wet_ui.Services
             return response;
         }
     }
+
+    public async Task<bool> DeleteDevice(string id)
+    {
+        var token = await _localStorageService.GetItem<string>("token");
+        if (token == null)
+        {
+            throw new Exception("No token found!");
+        }
+        else
+        {
+            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await this._httpClient.DeleteAsync("/api/Devices/"+id);
+            var isGood = await response.Content.ReadFromJsonAsync<bool>();
+            return isGood;
+        }
+    }
   }
 }

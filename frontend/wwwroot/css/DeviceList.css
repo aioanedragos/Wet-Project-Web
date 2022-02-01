@@ -55,7 +55,6 @@ body {
     padding: 16px;
     text-align: center;
     background-color: #f1f1f1;
-    height: 180px;
 }
 
 .card:hover {
@@ -72,12 +71,16 @@ body {
 }
 
 .on-bottom-of-element {
-    position: absolute;
+    position: relative;
     bottom: 0px;
 }
 
 .margin-16-px {
     margin: 16px;
+}
+
+.info-btn {
+    margin: 16px 16px 4px 16px;
 }
 
 .loader,
