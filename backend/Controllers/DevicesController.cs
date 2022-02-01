@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using wet_api.Dtos;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace wet_api.Controllers;
 
@@ -19,8 +20,9 @@ public class DevicesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<Device>>> Get()
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var devices = _dbContext.Devices.Where(d => d.UserId == Int32.Parse(userId)).ToList();
+        var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var devicesUserControls = await _dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId).Select(x => x.DeviceId).ToListAsync();
+        var devices = await _dbContext.Devices.Where(d => devicesUserControls.Contains(d.Id)).ToListAsync();
 
         return Ok(devices);
     }
@@ -30,6 +32,8 @@ public class DevicesController : ControllerBase
     [Route("{deviceId}")]
     public async Task<ActionResult<Device>> GetById(string deviceId)
     {
+        var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
         var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
         if (!isValidGuid)
         {
@@ -41,8 +45,10 @@ public class DevicesController : ControllerBase
         {
             return NotFound("Device not found");
         }
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (device.UserId != Int32.Parse(userId))
+
+        // check if user has access to device
+        var devicesUserControls = await _dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId && x.DeviceId == parsedId).FirstOrDefaultAsync();
+        if (devicesUserControls == null)
         {
             return Unauthorized();
         }
@@ -59,50 +65,54 @@ public class DevicesController : ControllerBase
         using (var httpClient = new HttpClient())
         {
             var data = await httpClient.GetFromJsonAsync<DeviceResponseDto>(new Uri(deviceData.Url));
-            System.Console.WriteLine(data);
             var device = new Device(data.Title, data.Description);
             device.Base = data.Base;
             device.Href = data.Href;
             device.Properties = data.Properties;
             device.Actions = data.Actions;
-            device.UserId = Int32.Parse(userId);
             this._dbContext.Devices.Add(device);
+            this._dbContext.PersonDeviceAccesses.Add(new PersonDeviceAccess
+            {
+                UserId = Int32.Parse(userId),
+                DeviceId = device.Id,
+                ControlType = ControlTypes.OWNER
+            });
             await _dbContext.SaveChangesAsync();
             return Ok(device);
         }
     }
 
-    [HttpGet]
-    [Route("/test")]
-    public async Task<ActionResult> testSelect()
-    {
-        var dbDevice = await this._dbContext.Persons.FindAsync(2);
-        return Ok(dbDevice);
-    }
+    // [HttpGet]
+    // [Route("/test")]
+    // public async Task<ActionResult> testSelect()
+    // {
+    //     var dbDevice = await this._dbContext.Persons.FindAsync(2);
+    //     return Ok(dbDevice);
+    // }
 
-    [Authorize]
-    [HttpPut]
-    [Route("{deviceId}")]
-    public async Task<ActionResult<Device>> updateDevice(string deviceId, Device device)
-    {
-        var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
-        if (!isValidGuid)
-        {
-            return BadRequest("Invalid id");
-        }
+    // [Authorize]
+    // [HttpPut]
+    // [Route("{deviceId}")]
+    // public async Task<ActionResult<Device>> updateDevice(string deviceId, Device device)
+    // {
+    //     var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
+    //     if (!isValidGuid)
+    //     {
+    //         return BadRequest("Invalid id");
+    //     }
 
-        var dbDevice = await this._dbContext.Devices.FindAsync(parsedId);
-        if (dbDevice == null)
-        {
-            return NotFound("Device not found");
-        }
+    //     var dbDevice = await this._dbContext.Devices.FindAsync(parsedId);
+    //     if (dbDevice == null)
+    //     {
+    //         return NotFound("Device not found");
+    //     }
 
-        dbDevice.Title = device.Title;
-        dbDevice.Description = device.Description;
-        await this._dbContext.SaveChangesAsync();
+    //     dbDevice.Title = device.Title;
+    //     dbDevice.Description = device.Description;
+    //     await this._dbContext.SaveChangesAsync();
 
-        return Ok(device);
-    }
+    //     return Ok(device);
+    // }
 
     [Authorize]
     [HttpDelete]
@@ -120,12 +130,16 @@ public class DevicesController : ControllerBase
         {
             return NotFound("Device not found");
         }
-        
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (dbDevice.UserId != Int32.Parse(userId))
+
+        var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var devicesUserControls = await _dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId && x.DeviceId == parsedId).FirstOrDefaultAsync();
+        if (devicesUserControls == null || devicesUserControls.ControlType != ControlTypes.OWNER)
         {
             return Unauthorized();
         }
+        
+        var deviceUsersControls = await _dbContext.PersonDeviceAccesses.Where(x => x.DeviceId == parsedId).ToListAsync();
+        this._dbContext.PersonDeviceAccesses.RemoveRange(deviceUsersControls);
 
         this._dbContext.Devices.Remove(dbDevice);
         await this._dbContext.SaveChangesAsync();
@@ -149,8 +163,9 @@ public class DevicesController : ControllerBase
             return NotFound("Device not found");
         }
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (device.UserId != Int32.Parse(userId))
+        var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var devicesUserControls = await _dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId && x.DeviceId == parsedId).FirstOrDefaultAsync();
+        if (devicesUserControls == null)
         {
             return Unauthorized();
         }
@@ -166,7 +181,7 @@ public class DevicesController : ControllerBase
     [Authorize]
     [HttpPatch]
     [Route("{deviceId}/properties/{propertyName}")]
-    public async Task<ActionResult> updateProperty(string deviceId, string propertyName, [FromBody]object newVal)
+    public async Task<ActionResult> updateProperty(string deviceId, string propertyName, [FromBody] object newVal)
     {
         var isValidGuid = Guid.TryParse(deviceId, out var parsedId);
         if (!isValidGuid)
@@ -180,15 +195,16 @@ public class DevicesController : ControllerBase
             return NotFound("Device not found");
         }
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (device.UserId != Int32.Parse(userId))
+        var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var devicesUserControls = await _dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId && x.DeviceId == parsedId).FirstOrDefaultAsync();
+        if (devicesUserControls == null || (new List<ControlTypes> {ControlTypes.OWNER, ControlTypes.READ_WRITE}).Contains(devicesUserControls.ControlType))
         {
             return Unauthorized();
         }
 
         using (var httpClient = new HttpClient())
         {
-            var data = await httpClient.PutAsJsonAsync(new Uri($"{device.Base}/properties/{propertyName}"), new Dictionary<string, object> {{propertyName, newVal}});
+            var data = await httpClient.PutAsJsonAsync(new Uri($"{device.Base}/properties/{propertyName}"), new Dictionary<string, object> { { propertyName, newVal } });
             System.Console.WriteLine(data);
             return Ok(data);
         }
