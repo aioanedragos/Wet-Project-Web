@@ -11,9 +11,12 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <InputText id="firstName" @bind-Value="deviceData.Url" />
+    <div class="form-group">
+        <label for="DeviceLink">DeviceLink:</label>
+        <InputText id="DeviceLink" @bind-Value="deviceData.Url" />
+    </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {

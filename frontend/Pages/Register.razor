@@ -7,14 +7,28 @@
 
 <EditForm Model="@newPerson" OnValidSubmit="@RegisterPerson">
     <DataAnnotationsValidator />
+
     <ValidationSummary />
+    <div class="form-group">
+        <label for="firstName">firstName:</label>
+        <InputText id="firstName" @bind-Value="newPerson.FirstName" />
+    </div>
 
-    <InputText id="firstName" @bind-Value="newPerson.FirstName" />
-    <InputText id="lastName" @bind-Value="newPerson.LastName" />
-    <InputText id="emailAddress" @bind-Value="newPerson.Email" />
-    <InputText id="password" @bind-Value="newPerson.Password" type="password" />
+    <div class="form-group">
+        <label for="lastName">lastName:</label>
+        <InputText id="lastName" @bind-Value="newPerson.LastName" />
+    </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        <label for="emailAddress">emailAddress:</label>
+        <InputText id="emailAddress" @bind-Value="newPerson.Email" />
+    </div>
+
+    <div class="form-group">
+        <label for="password">password:</label>
+        <InputText id="password" @bind-Value="newPerson.Password" type="password" />
+    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
     @code {
