@@ -197,11 +197,11 @@ public class DevicesController : ControllerBase
 
         var userId = Int32.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         var devicesUserControls = await _dbContext.PersonDeviceAccesses.Where(x => x.UserId == userId && x.DeviceId == parsedId).FirstOrDefaultAsync();
-        if (devicesUserControls == null || (new List<ControlTypes> {ControlTypes.OWNER, ControlTypes.READ_WRITE}).Contains(devicesUserControls.ControlType))
+        if (devicesUserControls == null || !(new List<ControlTypes> {ControlTypes.OWNER, ControlTypes.READ_WRITE}).Contains(devicesUserControls.ControlType))
         {
             return Unauthorized();
         }
-
+        
         using (var httpClient = new HttpClient())
         {
             var data = await httpClient.PutAsJsonAsync(new Uri($"{device.Base}/properties/{propertyName}"), new Dictionary<string, object> { { propertyName, newVal } });

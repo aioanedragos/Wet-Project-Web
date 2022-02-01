@@ -49,6 +49,11 @@ namespace wet_api.Controllers
         [HttpPost]
         public async Task<IActionResult> GiveAccess(GiveAccessDto request)
         {
+            if (request.ControlType == ControlTypes.OWNER)
+            {
+                return BadRequest("Cannot give owner access");
+            }
+
             var isValidGuid = Guid.TryParse(request.DeviceId, out var parsedId);
             if (!isValidGuid)
             {
