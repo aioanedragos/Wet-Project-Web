@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using wet_api.test_functions;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using wet_api.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -23,11 +25,24 @@ namespace wet_api.Controllers
         [Route("insertPeople")]
         public async Task<IActionResult> insertPeople(Person person)
         {
+            this.CreatePasswordHash("123", out var passwordHash, out var passwordSalt);
+            person.PasswordHash = passwordHash;
+            person.PasswordSalt = passwordSalt;
+
             this._dbContext.Persons.Add(person);
             await _dbContext.SaveChangesAsync();
             email sada = new email();
-            sada.ceva(person.Email);
+            sada.ceva(person.Email, "123");
             return Ok(person);
+        }
+
+        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                passwordSalt = hmac.Key;
+                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            }
         }
 
         [Authorize]

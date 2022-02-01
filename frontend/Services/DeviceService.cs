@@ -53,6 +53,24 @@ namespace wet_ui.Services
         }
     }
 
+    public async Task<string> ChangeProperty(string ID, string value, object newVal)
+    {
+        var token = await _localStorageService.GetItem<string>("token");
+        if (token == null)
+        {
+            throw new Exception("No token found!");
+        }
+        else
+        {
+            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var content = JsonContent.Create<object>(newVal);
+            var response = await this._httpClient.PatchAsync("/api/Devices/" + ID + "/properties/"+value, content);
+            //var response = await this._httpClient.PutAsJsonAsync("/api/Devices/" + ID + "/properties/"+value, content);
+            System.Console.WriteLine(response);
+            return response.ToString();
+        }
+    }
+
     public async Task addDevice(string url)
     {
         var token = await _localStorageService.GetItem<string>("token");

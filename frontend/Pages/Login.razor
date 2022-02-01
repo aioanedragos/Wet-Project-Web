@@ -4,16 +4,22 @@
 
 <h1>Auth Page</h1>
 
-<h4>Get Registered</h4>
+<h4>Login</h4>
 
 <EditForm Model="@newPerson" OnValidSubmit="@LoginPerson">
     <DataAnnotationsValidator />
     <ValidationSummary />
+    <div class="form-group">
+        <label for="emailAddress">Email:</label>
+        <InputText id="emailAddress" @bind-Value="newPerson.Email" />
+    </div>
 
-    <InputText id="emailAddress" @bind-Value="newPerson.Email" />
-    <InputText id="password" @bind-Value="newPerson.Password" type="password" />
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <InputText id="password" @bind-Value="newPerson.Password" type="password" />
+    </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {

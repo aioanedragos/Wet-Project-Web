@@ -9,13 +9,21 @@
 <EditForm Model="@newPerson" OnValidSubmit="@InsertPerson">
     <DataAnnotationsValidator />
     <ValidationSummary />
+    <div class="form-group">
+        <label for="firstName">firstName:</label>
+        <InputText id="firstName" @bind-Value="newPerson.firstName" />
+    </div>
+    <div class="form-group">
+        <label for="lastName">lastName:</label>
+        <InputText id="lastName" @bind-Value="newPerson.lastName" />
+    </div>
+    <div class="form-group">
+        <label for="emailAddress">emailAddress:</label>
+        <InputText id="emailAddress" @bind-Value="newPerson.email" />
+    </div>
 
-    <InputText id="firstName" @bind-Value="newPerson.firstName" />
-    <InputText id="lastName" @bind-Value="newPerson.lastName" />
-    <InputText id="emailAddress" @bind-Value="newPerson.email" />
 
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
 
 @code {
