@@ -76,7 +76,11 @@ else
             this.properties = properties.GetProperty("value");
             this.device = await this.deviceService.GetDevice(ID);
 
-            this.deviceAccessList = await this.personService.GetAccessListForDevice(ID);
+            try {
+                this.deviceAccessList = await this.personService.GetAccessListForDevice(ID);
+            } catch (Exception e) {
+                this.deviceAccessList = null;
+            }
         }
         else
         {
